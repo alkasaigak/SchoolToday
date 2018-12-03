@@ -1,6 +1,7 @@
 from flask import Flask
 from .database import db
 from instance.login import lm
+import threading
 
 def create():
     SchoolToday = Flask(__name__, static_folder='static')
@@ -21,6 +22,6 @@ def create():
     SchoolToday.register_blueprint(login.module)
     import instance.achivments as achivments
     SchoolToday.register_blueprint(achivments.module)
-    import instance.images as images
-    SchoolToday.register_blueprint(images.module)
+    schedule.GetWholeTimeTable()
+    threading.Timer(1, schedule.GetWholeTimeTable).start
     return SchoolToday
